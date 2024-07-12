@@ -1,4 +1,7 @@
 # Kafka Consumer Application
+This is where integrating Kafka with a database like PostgreSQL can be valuable. You can use Kafka to ingest and stream data, and then use PostgreSQL as a foundation for building apps and websites that use that data. This allows you to leverage the strengths of both technologies: Kafka for handling high volumes of streaming data and PostgreSQL for storing and querying structured data.
+![image](https://github.com/user-attachments/assets/3df15f96-aa29-477a-8fad-96de8833178d)
+
 
 Kafka consumer consumes the data from Kafka Topics and writes them into database.
 > In this example: pgAdmin is used, it is a web-based database management tool for PostgreSQL.
