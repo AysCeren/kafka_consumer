@@ -49,7 +49,7 @@ The project has a Contact class, which has attributes corresponding to kafka's t
 
 ```
 
-This 'Annotations', make our class ready to be converted into a table, and the name of the table will be proper to our database. 
+These 'Annotations', make our class ready to be converted into a table, and the name of the table will be proper to our database. 
 > Id will be unique, that's why we are annoting as '@Id', so in the table it will be a Primary Key. 'GeneratedValue provide auto-incremented id, so user will not enter an ID, and ID won't be duplicated.
 ```
 @Id //determines the primary key for the contacts table
@@ -67,6 +67,15 @@ This 'Annotations', make our class ready to be converted into a table, and the n
       .
       .
       .
+```
+
+## Kafka Consumer Class:
+
+@KafkaListener will continiously listen the kafka topics whether an event has occured or there is a change. 
+
+```
+
+
 ```
 
 
