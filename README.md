@@ -10,17 +10,63 @@ This is where integrating Kafka with a database like PostgreSQL can be valuable.
 
 ## Kafka Consumer Application Initiation:
 + You may prefer to work with initalizer like spring.io
-+ ![image](https://github.com/user-attachments/assets/ee14c177-4afd-4c29-bf2a-815d57968570)
-+ After the program is ready, start with application.properties (under resources)
-      - 1. It is important to work with StringDeserializer, if you want to consume your data as object.
-      - 2. group-id should be determined, because kafka consumer is a multi consumer system, we need a UNIQUE subscriber/consumer id.
+![image](https://github.com/user-attachments/assets/ee14c177-4afd-4c29-bf2a-815d57968570)
+
+ After the program is ready, start with application.properties (under resources)
+ 1. It is important to work with StringDeserializer, if you want to consume your data as object.
+ 2. group-id should be determined, because kafka consumer is a multi consumer system, we need a UNIQUE subscriber/consumer id.
          - Postgres Connection:
          - 1. spring.datasource.url=jdbc:postgresql://localhost:5432/test give port for your pgAdmin
          - 2. Check the feautures such as name, username, password
 
   ![image](https://github.com/user-attachments/assets/3b726192-10ef-4355-8cbe-10b1634138a0)
 
+```
+# application.properties
+      spring.application.name=kafka-consumer
+      server.port=9090
+      spring.kafka.consumer.bootstrap-servers=localhost:9092
+      spring.kafka.consumer.group-id="myGroup"
+      spring.kafka.consumer.auto-offset-reset= earliest
+      spring.datasource.url=jdbc:postgresql://localhost:5432/test
+      spring.datasource.name=demo
+      spring.datasource.username=postgres
+      spring.datasource.password=postgres
+```
+
+
 ## Repository Logic:
 
 JPA repository helps to store data in RDBMS, pgAdmin in this example. 
-We should create a ContactRepo interface, which extends JPARepository and JPARepository extends CRUDRepository. CRUDRepository provides us with save() method to write data into database.
+We should create a ContactRepo interface, which extends JPARepository and JPARepository extends CRUDRepository. CRUDRepository provides us with save() method to write data into database. So, I have created a repository package and open a new interface which is called ContactRepo and extends JPARepository.
+
+## Contact DTO:
+The project has a Contact class, which has attributes corresponding to kafka's topic. There is an important 3 configuration
+```
+@Data
+@Entity //it will be an entity
+@Table(name = "contacts") // VERY IMPORTANT
+
+```
+
+This 'Annotations', make our class ready to be converted into a table, and the name of the table will be proper to our database. 
+> Id will be unique, that's why we are annoting as '@Id', so in the table it will be a Primary Key. 'GeneratedValue provide auto-incremented id, so user will not enter an ID, and ID won't be duplicated.
+```
+@Id //determines the primary key for the contacts table
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //very important! this code saved the program from duplicate key error
+    private int id; //which is id
+    @Setter
+    @Getter
+    private String firstname;
+    @Setter
+    @Getter
+    private String lastname;
+    @Setter
+    @Getter
+      .
+      .
+      .
+```
+
+
