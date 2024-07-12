@@ -11,10 +11,9 @@ This is where integrating Kafka with a database like PostgreSQL can be valuable.
 ## Kafka Consumer Application Initiation:
 + You may prefer to work with initalizer like spring.io
 + ![image](https://github.com/user-attachments/assets/ee14c177-4afd-4c29-bf2a-815d57968570)
-
 + After the program is ready, start with application.properties (under resources)
-      1. It is important to work with StringDeserializer, if you want to consume your data as object.
-      2. group-id should be determined, because kafka consumer is a multi consumer system, we need a UNIQUE subscriber/consumer id.
+      - 1. It is important to work with StringDeserializer, if you want to consume your data as object.
+      - 2. group-id should be determined, because kafka consumer is a multi consumer system, we need a UNIQUE subscriber/consumer id.
          - Postgres Connection:
          - 1. spring.datasource.url=jdbc:postgresql://localhost:5432/test give port for your pgAdmin
          - 2. Check the feautures such as name, username, password
