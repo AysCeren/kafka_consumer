@@ -11,4 +11,10 @@ Kafka consumer consumes the data from Kafka Topics and writes them into database
    - Postgres Connection:
    - 1. spring.datasource.url=jdbc:postgresql://localhost:5432/test give port for your pgAdmin
    - 2. Check the feautures such as name, username, password
-  
+
+  ![image](https://github.com/user-attachments/assets/3b726192-10ef-4355-8cbe-10b1634138a0)
+
+## Repository Logic:
+
+JPA repository helps to store data in RDBMS, pgAdmin in this example. 
+We should create a ContactRepo interface, which extends JPARepository and JPARepository extends CRUDRepository. CRUDRepository provides us with save() method to write data into database.
