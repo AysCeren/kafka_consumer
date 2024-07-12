@@ -74,8 +74,51 @@ These 'Annotations', make our class ready to be converted into a table, and the 
 @KafkaListener will continiously listen the kafka topics whether an event has occured or there is a change. 
 
 ```
-
+ @Autowired
+    private ContactRepo repo; //to write to the Database
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumer.class);
+```
+####### repo is ready to save data to database.
 
 ```
+    @KafkaListener(topics = "writeIntoTopic", groupId = "myGroup") //the group id visible in application.properties too.
+    public void consume(String message) throws JsonProcessingException {
+        LOGGER.info(String.format("Consumed message: %s", message));
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            // convert JSON to Java object
+            Contact ct = mapper.readValue(message, Contact.class);
+            repo.save(ct);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+```
+
+**Kafka Listener will read data from the topic, called as writeIntoTopic, spark wrote the processed data to this topic.
+JSON data is consumed as String, it is converted into object type in following lines with the usage of 'ObjectMapper' class. After ct object is mapped, repo will save it into postgreSQL DataBase.
+
+You should consider:
+> Start your kafka servers
+> After you had a connection to the database, you should start your database
+
+## What about PostgreSQL table content:
+The 'Contacts' table have been created, proper to the entities. 
+```
+    create table contacts
+    (
+    	id SERIAL PRIMARY KEY,
+    	firstname varchar(255),
+    	lastname varchar(255),
+    	address varchar(255),
+    	phone varchar(255)
+     loginDate Date,
+     birthDay Date,
+     age int
+    )
+```
+
+Last Look:
+![image](https://github.com/user-attachments/assets/896150a2-93d9-44c1-aa58-34feb59fc6b0)
 
 
